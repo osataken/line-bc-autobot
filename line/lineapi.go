@@ -33,14 +33,9 @@ func CallLineApi(endpoint, serviceUri string, accessToken string, req , rsp inte
 
 
 func PostContent(url string, headers http.Header, payload []byte) ([]byte, error) {
-	//log.Tracef("serve_http: ServeHttpPostContent: %v", url)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
-	//	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	setHttpHeaders(req, headers)
-
-	//fmt.Println("serve_http: requrest Headers:", req.Header)
-	//log.Tracef("serve_http: request value: %v", string(payload))
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -49,16 +44,10 @@ func PostContent(url string, headers http.Header, payload []byte) ([]byte, error
 	}
 	defer resp.Body.Close()
 
-	//log.Tracef("serve_http: response Status: %v", resp.Status)
-	//log.Tracef("serve_http: response Headers: %v", resp.Header)
-
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
 	}
-
-
-	//log.Tracef("serve_http: response value: %v", string(body))
 
 	if resp.StatusCode != 200 && resp.StatusCode != 201 {
 		return body, HttpError{Status: resp.Status, StatusCode: resp.StatusCode}
