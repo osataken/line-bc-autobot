@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"github.com/gorilla/mux"
+	"os"
 )
 
 func main() {
@@ -10,8 +11,10 @@ func main() {
 	r.HandleFunc("/", DefaultHandler)
 	r.HandleFunc("/message/relay", MessageRelayHandler)
 
-	// Bind to a port and pass our router in
-	http.ListenAndServe(":80", r)
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func DefaultHandler(w http.ResponseWriter, r *http.Request) {
