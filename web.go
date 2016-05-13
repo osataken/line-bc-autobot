@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	println("Starting up line bc autobot!!!")
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", DefaultHandler)
 	r.HandleFunc("/message/relay", MessageRelayHandler)
