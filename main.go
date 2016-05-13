@@ -38,11 +38,31 @@ func MessageRelayHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if receivedMessage.Result != nil && len(receivedMessage.Result) > 0 {
-			text := fmt.Sprintf("Received message: %v", receivedMessage.Result[0].Content.Text)
-			w.Write([]byte(text))
+			for _, result := range receivedMessage.Result {
+				handleRelayMessage(w, result)
+			}
 		}
 	}
 }
+
+
+func handleRelayMessage(w http.ResponseWriter, result message.Result) {
+
+	if result.From != "" {
+		text := fmt.Sprintf("Received message: %v", result.Content.Text)
+		w.Write([]byte(text + "\n"))
+
+		mid := result.From
+
+		_, err := sendOAText(mid, text);
+		if err != nil {
+			text := fmt.Sprintf("SendErr: %v", err.Error())
+			w.Write([]byte(text))
+			return
+		}
+	}
+}
+
 
 func MessageSendHandler(w http.ResponseWriter, r *http.Request) {
 	mid := r.URL.Query().Get("mid")
@@ -60,6 +80,7 @@ func MessageSendHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendOAText(mid, content string) (string, error) {
+	fmt.Println("SendOATo:", mid, " content:", content)
 
 	req := &message.EventsRequest{
 		To:        []string{ mid },
@@ -81,6 +102,7 @@ func sendOAText(mid, content string) (string, error) {
 		return "", err
 	}
 
+	fmt.Println("Success with messageId:", rsp.MessageId)
 	return rsp.MessageId, nil
 
 }
