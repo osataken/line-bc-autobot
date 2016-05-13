@@ -75,7 +75,6 @@ func sendOAText(mid, content string) (string, error) {
 	rsp := &message.EventsResponse{}
 
 	accessToken := os.Getenv("OA_CHANNEL_TOKEN")
-	fmt.Println("OA_CHANNEL_TOKEN: ", accessToken)
 
 	err := line.CallLineApi("https://api.line.me/v1/", "events", accessToken, req, rsp)
 	if err != nil {
