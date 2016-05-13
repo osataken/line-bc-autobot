@@ -27,15 +27,15 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 
 func MessageRelayHandler(w http.ResponseWriter, r *http.Request) {
 	receivedMessage := message.Receive{}
-
-
 	if body, _ := ioutil.ReadAll(r.Body); len(body) > 0 {
 		err := json.Unmarshal(body, &receivedMessage)
 		if err != nil {
 			w.Write([]byte("bad request!"))
 		}
 
-		text := fmt.Sprintf("Received message: %v", receivedMessage.Result[0].Content.Text)
-		w.Write([]byte(text))
+		if receivedMessage.Result != nil && len(receivedMessage.Result) > 0 {
+			text := fmt.Sprintf("Received message: %v", receivedMessage.Result[0].Content.Text)
+			w.Write([]byte(text))
+		}
 	}
 }
