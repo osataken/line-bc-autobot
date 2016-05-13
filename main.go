@@ -74,7 +74,8 @@ func sendOAText(mid, content string) (string, error) {
 
 	rsp := &message.EventsResponse{}
 
-	accessToken := "iYUXUEuMdfd3G3AzHXn9zDXAmD+EvW71SWrS3yMTxOxjRl11dcwFQTqEh7khEYkelOhODEucBl/LDN05RtByHev6kjJknCqvI5hFftUKM6fXAPKxSeXSpZep/BiGZ/cdhMA9CCmgNXGWuuHtfAsg8K18BSl7lGXPAT9HRw/DX2c="
+	accessToken := os.Getenv("OA_CHANNEL_TOKEN")
+	fmt.Println("OA_CHANNEL_TOKEN: ", accessToken)
 
 	err := line.CallLineApi("https://api.line.me/v1/", "events", accessToken, req, rsp)
 	if err != nil {
