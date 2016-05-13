@@ -15,6 +15,7 @@ func main() {
 
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
+		println("Error occurred: " + err.Error())
 		panic(err)
 	}
 }
