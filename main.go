@@ -2,20 +2,18 @@ package main
 
 import (
 	"net/http"
-	"github.com/gorilla/mux"
 	"os"
+	"fmt"
 )
 
 func main() {
-	println("Starting up line bc autobot!!!")
-
-	r := mux.NewRouter()
-	r.HandleFunc("/", DefaultHandler)
-	r.HandleFunc("/message/relay", MessageRelayHandler)
+	fmt.Println("Starting up line bc autobot!!!")
+	http.HandleFunc("/", DefaultHandler)
+	http.HandleFunc("/message/relay", MessageRelayHandler)
 
 	err := http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 	if err != nil {
-		println("Error occurred: " + err.Error())
+		fmt.Println("Error occurred: " + err.Error())
 		panic(err)
 	}
 }
