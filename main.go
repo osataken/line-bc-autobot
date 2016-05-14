@@ -10,7 +10,6 @@ import (
 	"github.com/osataken/line-bc-autobot/line"
 	"github.com/osataken/line-bc-autobot/db"
 	"github.com/osataken/line-bc-autobot/template"
-	"github.com/osataken/line-bc-autobot/db"
 )
 
 func main() {
@@ -80,7 +79,7 @@ func handleRelayMessage(w http.ResponseWriter, result message.Result) {
 		text := fmt.Sprintf("Received message: %v", result.Content.Text)
 		w.Write([]byte(text + "\n"))
 
-		mid := result.From
+		mid := result.Content.From
 
 		_, err := sendOAText(mid, text);
 		if err != nil {
