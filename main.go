@@ -37,8 +37,10 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 func MessageRelayHandler(w http.ResponseWriter, r *http.Request) {
 	receivedMessage := message.Receive{}
 	if body, _ := ioutil.ReadAll(r.Body); len(body) > 0 {
+		fmt.Println(string(body))
 		err := json.Unmarshal(body, &receivedMessage)
 		if err != nil {
+			fmt.Println(err.Error())
 			w.WriteHeader(400)
 			w.Write([]byte("bad request!"))
 			return
