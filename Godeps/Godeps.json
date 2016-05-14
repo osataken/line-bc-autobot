@@ -2,9 +2,6 @@
 	"ImportPath": "github.com/osataken/line-bc-autobot",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v60",
-	"Packages": [
-		"./..."
-	],
 	"Deps": [
 		{
 			"ImportPath": "gopkg.in/mgo.v2",
