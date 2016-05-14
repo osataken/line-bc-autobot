@@ -14,14 +14,14 @@ type Result struct {
 }
 
 type Content struct {
-	Location        string   `json:"location"`
+	Location        *string   `json:"location"`
 	Id              string   `json:"id"`
 	ContentType     int      `json:"contentType"`
 	From            string   `json:"from"`
 	CreatedTime     int64    `json:"createdTime"`
 	To              []string `json:"to"`
 	ToType          int      `json:"toType"`
-	ContentMetadata string   `json:"contentMetadata"`
+	ContentMetadata map[string]string   `json:"contentMetadata"`
 	Text            string   `json:"text"`
 }
 
