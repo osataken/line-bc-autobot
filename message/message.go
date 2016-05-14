@@ -6,7 +6,7 @@ type Receive struct {
 
 type Result struct {
 	From        string   `json:"from"`
-	FromChannel string   `json:"fromChannel"`
+	FromChannel int64   `json:"fromChannel"`
 	To          []string `json:"to"`
 	EventType   string   `json:"eventType"`
 	Id          string   `json:"id"`
@@ -18,7 +18,7 @@ type Content struct {
 	Id              string   `json:"id"`
 	ContentType     int      `json:"contentType"`
 	From            string   `json:"from"`
-	CreateTime      int64    `json:"createTime"`
+	CreatedTime     int64    `json:"createdTime"`
 	To              []string `json:"to"`
 	ToType          int      `json:"toType"`
 	ContentMetadata string   `json:"contentMetadata"`
