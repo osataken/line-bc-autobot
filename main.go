@@ -73,6 +73,8 @@ func RegistrationFormSaveHandler(w http.ResponseWriter, r *http.Request) {
 func handleRelayMessage(w http.ResponseWriter, result message.Result) {
 
 	if result.From != "" {
+		db.SaveReceivedMessage(result)
+
 		text := fmt.Sprintf("Received message: %v", result.Content.Text)
 		w.Write([]byte(text + "\n"))
 
@@ -84,8 +86,6 @@ func handleRelayMessage(w http.ResponseWriter, result message.Result) {
 			w.Write([]byte(text))
 			return
 		}
-
-		db.SaveReceivedMessage(result)
 	}
 }
 
