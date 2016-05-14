@@ -8,7 +8,9 @@ import (
 	"io/ioutil"
 	"github.com/osataken/line-bc-autobot/message"
 	"github.com/osataken/line-bc-autobot/line"
+	"github.com/osataken/line-bc-autobot/db"
 	"github.com/osataken/line-bc-autobot/template"
+	"github.com/osataken/line-bc-autobot/db"
 )
 
 func main() {
@@ -18,6 +20,8 @@ func main() {
 	http.HandleFunc("/message/send", MessageSendHandler)
 	http.HandleFunc("/registration", RegistrationFormHandler)
 	http.HandleFunc("/registration/save", RegistrationFormSaveHandler)
+
+	db.InitDB()
 
 	err := http.ListenAndServe(":" + os.Getenv("PORT"), nil)
 	if err != nil {
@@ -80,6 +84,8 @@ func handleRelayMessage(w http.ResponseWriter, result message.Result) {
 			w.Write([]byte(text))
 			return
 		}
+
+		db.SaveReceivedMessage(result)
 	}
 }
 
