@@ -33,7 +33,7 @@ func DefaultHandler(w http.ResponseWriter, r *http.Request) {
 func MessageRelayHandler(w http.ResponseWriter, r *http.Request) {
 	receivedMessage := message.Receive{}
 	if body, _ := ioutil.ReadAll(r.Body); len(body) > 0 {
-		fmt.Println(r.Body)
+		fmt.Println(body)
 		err := json.Unmarshal(body, &receivedMessage)
 		if err != nil {
 			w.WriteHeader(400)
