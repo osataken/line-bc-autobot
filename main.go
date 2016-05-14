@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"github.com/osataken/line-bc-autobot/message"
 	"github.com/osataken/line-bc-autobot/line"
+	"github.com/osataken/line-bc-autobot/template"
 )
 
 func main() {
@@ -15,6 +16,8 @@ func main() {
 	http.HandleFunc("/", DefaultHandler)
 	http.HandleFunc("/message/relay", MessageRelayHandler)
 	http.HandleFunc("/message/send", MessageSendHandler)
+	http.HandleFunc("/registration", RegistrationFormHandler)
+	http.HandleFunc("/registration/save", RegistrationFormSaveHandler)
 
 	err := http.ListenAndServe(":" + os.Getenv("PORT"), nil)
 	if err != nil {
@@ -45,6 +48,23 @@ func MessageRelayHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func writeResponse(w http.ResponseWriter, text string) {
+	w.Write([]byte(text))
+}
+
+func RegistrationFormHandler(w http.ResponseWriter, r *http.Request) {
+	writeResponse(w, template.GetRegistrationForm())
+}
+
+func RegistrationFormSaveHandler(w http.ResponseWriter, r *http.Request) {
+	writeResponse(w, "Thank you for registration!!")
+
+	r.ParseForm()
+
+	for key, value := range r.Form {
+		fmt.Println("Key:", key, " Value:", value)
+	}
+}
 
 func handleRelayMessage(w http.ResponseWriter, result message.Result) {
 
